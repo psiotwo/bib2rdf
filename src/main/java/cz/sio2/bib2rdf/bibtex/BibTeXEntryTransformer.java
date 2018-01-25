@@ -3,9 +3,18 @@ package cz.sio2.bib2rdf.bibtex;
 import cz.cvut.kbss.jopa.model.EntityManager;
 import cz.sio2.bib2rdf.bibtex.validators.ArticleValidator;
 import cz.sio2.bib2rdf.bibtex.validators.BookValidator;
+import cz.sio2.bib2rdf.bibtex.validators.BookletValidator;
+import cz.sio2.bib2rdf.bibtex.validators.ConferenceValidator;
+import cz.sio2.bib2rdf.bibtex.validators.InbookValidator;
+import cz.sio2.bib2rdf.bibtex.validators.IncollectionValidator;
 import cz.sio2.bib2rdf.bibtex.validators.InproceedingsValidator;
+import cz.sio2.bib2rdf.bibtex.validators.ManualValidator;
+import cz.sio2.bib2rdf.bibtex.validators.MastersthesisValidator;
 import cz.sio2.bib2rdf.bibtex.validators.MiscValidator;
 import cz.sio2.bib2rdf.bibtex.validators.PhdthesisValidator;
+import cz.sio2.bib2rdf.bibtex.validators.ProceedingsValidator;
+import cz.sio2.bib2rdf.bibtex.validators.TechReportValidator;
+import cz.sio2.bib2rdf.bibtex.validators.UnpublishedValidator;
 import cz.sio2.bib2rdf.generated.Vocabulary;
 import cz.sio2.bib2rdf.generated.model.Entry;
 import java.util.ArrayList;
@@ -29,8 +38,8 @@ public class BibTeXEntryTransformer {
      * @param localName
      */
     private static String p(final String localName) {
-        return Vocabulary.ONTOLOGY_IRI_bibtex + "#" + "has" + Character.toUpperCase(localName.charAt(0))
-               + localName.substring(1).toLowerCase();
+        return Vocabulary.ONTOLOGY_IRI_bibtex + "#" + "has" + Character
+            .toUpperCase(localName.charAt(0)) + localName.substring(1).toLowerCase();
     }
 
     /**
@@ -55,7 +64,7 @@ public class BibTeXEntryTransformer {
 
         p.put(p("key"), Collections.singleton(e.getKey().getValue()));
 
-        i.setName(e.getField(BibTeXEntry.KEY_AUTHOR).toUserString() + "-" + e.getField(BibTeXEntry.KEY_TITLE).toUserString());
+        //        i.setName(e.getField(BibTeXEntry.KEY_KEY).toUserString());
         i.setProperties(p);
         i.setTypes(t);
         em.getTransaction().begin();
@@ -78,22 +87,48 @@ public class BibTeXEntryTransformer {
             case Vocabulary.s_c_Article:
                 ArticleValidator.validate(em, id);
                 break;
+            case Vocabulary.s_c_Book:
+                BookValidator.validate(em, id);
+                break;
+            case Vocabulary.s_c_Booklet:
+                BookletValidator.validate(em, id);
+                break;
+            case Vocabulary.s_c_Conference:
+                ConferenceValidator.validate(em, id);
+                break;
+            case Vocabulary.s_c_Inbook:
+                InbookValidator.validate(em, id);
+                break;
+            case Vocabulary.s_c_Incollection:
+                IncollectionValidator.validate(em, id);
+                break;
             case Vocabulary.s_c_Inproceedings:
                 InproceedingsValidator.validate(em, id);
+                break;
+            case Vocabulary.s_c_Manual:
+                ManualValidator.validate(em, id);
+                break;
+            case Vocabulary.s_c_Mastersthesis:
+                MastersthesisValidator.validate(em, id);
                 break;
             case Vocabulary.s_c_Misc:
                 MiscValidator.validate(em, id);
                 break;
-            case Vocabulary.s_c_Book:
-                BookValidator.validate(em, id);
-                break;
             case Vocabulary.s_c_Phdthesis:
                 PhdthesisValidator.validate(em, id);
                 break;
+            case Vocabulary.s_c_Proceedings:
+                ProceedingsValidator.validate(em, id);
+                break;
+            case Vocabulary.s_c_Techreport:
+                TechReportValidator.validate(em, id);
+                break;
+            case Vocabulary.s_c_Unpublished:
+                UnpublishedValidator.validate(em, id);
+                break;
             default:
-                throw new ValidationException(id, Collections.singletonList("Unknown type " + type));
+                throw new ValidationException(id,
+                    Collections.singletonList("Unknown type " + type));
         }
     }
-
-
 }

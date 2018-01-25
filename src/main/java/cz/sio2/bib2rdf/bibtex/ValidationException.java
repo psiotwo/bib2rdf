@@ -9,6 +9,6 @@ public class ValidationException extends Exception {
     }
 
     public ValidationException(final String id, List<String> messages) {
-        super(messages.stream().map((s) -> id+" : "+s).collect(Collectors.joining(",\n")));
+        super(messages.stream().map((s) -> id + " : " + s).collect(Collectors.joining(",\n")));
     }
 }

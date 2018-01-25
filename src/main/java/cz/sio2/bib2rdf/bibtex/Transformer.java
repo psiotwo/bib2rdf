@@ -38,7 +38,7 @@ public class Transformer {
 
     private void transformBibtexObject(final EntityManager em, final BibTeXObject o) {
         if (o instanceof BibTeXEntry) {
-            BibTeXEntryTransformer.parse(em,(BibTeXEntry) o);
+            BibTeXEntryTransformer.parse(em, (BibTeXEntry) o);
         }
     }
 }

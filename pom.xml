@@ -122,22 +122,10 @@
             <artifactId>ontodriver-owlapi</artifactId>
             <version>${jopa.version}</version>
         </dependency>
-        <!-- Pellet -->
         <dependency>
-            <groupId>com.clarkparsia.pellet</groupId>
-            <artifactId>pellet-core</artifactId>
-            <version>${pellet.version}</version>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.23</version>
         </dependency>
-        <dependency>
-            <groupId>com.clarkparsia.pellet</groupId>
-            <artifactId>pellet-owlapi</artifactId>
-            <version>${pellet.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.clarkparsia.pellet</groupId>
-            <artifactId>pellet-explanation</artifactId>
-            <version>${pellet.version}</version>
-        </dependency>
-
     </dependencies>
 </project>

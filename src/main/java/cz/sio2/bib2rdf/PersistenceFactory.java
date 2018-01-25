@@ -31,20 +31,25 @@ public class PersistenceFactory {
         throw new AssertionError();
     }
 
-    public static void init(String ontologyFile, Map<String,String> propsToOverride) {
+    public static void init(String ontologyFile, Map<String, String> propsToOverride) {
         final Map<String, String> props = new HashMap<>();
-        // Here we set up basic storage access properties - driver class, physical location of the storage
-        props.put(JOPAPersistenceProperties.ONTOLOGY_PHYSICAL_URI_KEY, setupRepository(ontologyFile));
-        props.put(JOPAPersistenceProperties.DATA_SOURCE_CLASS, "cz.cvut.kbss.ontodriver.owlapi.OwlapiDataSource");
+        // Here we set up basic storage access properties - driver class, physical location of
+        // the storage
+        props.put(JOPAPersistenceProperties.ONTOLOGY_PHYSICAL_URI_KEY,
+            setupRepository(ontologyFile));
+        props.put(JOPAPersistenceProperties.DATA_SOURCE_CLASS,
+            "cz.cvut.kbss.ontodriver.owlapi.OwlapiDataSource");
         // View transactional changes during transaction
         props.put(OntoDriverProperties.USE_TRANSACTIONAL_ONTOLOGY, Boolean.TRUE.toString());
         // Ontology language
         props.put(JOPAPersistenceProperties.LANG, "en");
         // Where to look for entity classes
-        props.put(OntoDriverProperties.OWLAPI_REASONER_FACTORY_CLASS, StructuralReasonerFactory.class.getName());
+        props.put(OntoDriverProperties.OWLAPI_REASONER_FACTORY_CLASS,
+            StructuralReasonerFactory.class.getName());
         // Persistence provider name
-        props.put(JOPAPersistenceProperties.JPA_PERSISTENCE_PROVIDER, JOPAPersistenceProvider.class.getName());
-        props.put(JOPAPersistenceProperties.DISABLE_IC_VALIDATION_ON_LOAD, Boolean.TRUE+"");
+        props.put(JOPAPersistenceProperties.JPA_PERSISTENCE_PROVIDER,
+            JOPAPersistenceProvider.class.getName());
+        props.put(JOPAPersistenceProperties.DISABLE_IC_VALIDATION_ON_LOAD, Boolean.TRUE + "");
 
         props.putAll(propsToOverride);
         // Use Pellet for reasoning
@@ -55,8 +60,8 @@ public class PersistenceFactory {
     private static String setupRepository(String ontologyFile) {
         LOG.debug("Setting up repository...");
         final String ontologyFileAbsolute = resolveAbsolutePath(ontologyFile);
-        final String repoFolder = ontologyFileAbsolute.substring(0,
-            ontologyFileAbsolute.lastIndexOf(File.separatorChar));
+        final String repoFolder =
+            ontologyFileAbsolute.substring(0, ontologyFileAbsolute.lastIndexOf(File.separatorChar));
         final File repoFile = new File(repoFolder + File.separator + REPOSITORY_FILE_NAME);
         if (repoFile.exists()) {
             LOG.debug("Repository already exists. Removing it...");
